@@ -16,6 +16,11 @@ namespace SkpDbLib.Managers
             _fileWriter.WriteStringToFile(filePath, data);
         }
 
+        public void WritePdf(string filePath, List<string> data)
+        {
+            _fileWriter.WritePdf(filePath, data);
+        }
+
         public string ReadFileToString(string filePath)
         {
             return _fileReader.ReadFileToString(filePath);

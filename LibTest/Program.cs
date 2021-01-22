@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace LibTest
@@ -44,12 +45,24 @@ namespace LibTest
             files.WriteStringToFile(@"C:\Users\MartinRiehnMadsen\Desktop\SkpDbTest\TestRead.txt", combined);
             Console.WriteLine("File have been written!");
 
+            // writes a pdf file with data from list
+            // strings in list needs \h or \t to tell writer if it is normal text or a headline
+            Console.WriteLine("\nWriting pdf file");
+            files.WritePdf(@"C:\Users\MartinRiehnMadsen\Desktop\SkpDbTest\pdfTest.pdf", new List<string>() { @"\hProjekter",
+                @"\hSKP Project Website", @"\hUsers", @"\tMM", @"\tKA", @"\hProjekter", @"\hSKP Project Website", @"\hUsers",
+                @"\tMM", @"\tKA", @"\hProjekter", @"\hSKP Project Website", @"\hUsers", @"\tMM", @"\tKA", @"\hProjekter", 
+                @"\hSKP Project Website", @"\hUsers", @"\tMM", @"\tKA", @"\hProjekter", @"\hSKP Project Website", @"\hUsers",
+                @"\tMM", @"\tKA", @"\hProjekter", @"\hSKP Project Website", @"\hUsers", @"\tMM", @"\tKA" });
+            Console.WriteLine("Pdf file written!");
+
             // reads the file, and splits the data so it can be decrypted
+            Console.WriteLine("\nTesting file reading");
             string content = files.ReadFileToString(@"C:\Users\MartinRiehnMadsen\Desktop\SkpDbTest\TestRead.txt");
             string[] splits = content.Split('\n');
             salt = splits[0];
             string decrypteddata = sec.Decrypt(Convert.FromBase64String(splits[1]), Convert.FromBase64String(salt));
             Console.WriteLine(decrypteddata);
+            Console.WriteLine("File read!");
 
 
             SkpDbLib.Managers.Db db = new SkpDbLib.Managers.Db();
