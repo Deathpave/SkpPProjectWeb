@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace LibTest
@@ -50,7 +52,7 @@ namespace LibTest
             Console.WriteLine("\nWriting pdf file");
             files.WritePdf(@"C:\Users\MartinRiehnMadsen\Desktop\SkpDbTest\pdfTest.pdf", new List<string>() { @"\hProjekter",
                 @"\hSKP Project Website", @"\hUsers", @"\tMM", @"\tKA", @"\hProjekter", @"\hSKP Project Website", @"\hUsers",
-                @"\tMM", @"\tKA", @"\hProjekter", @"\hSKP Project Website", @"\hUsers", @"\tMM", @"\tKA", @"\hProjekter", 
+                @"\tMM", @"\tKA", @"\hProjekter", @"\hSKP Project Website", @"\hUsers", @"\tMM", @"\tKA", @"\hProjekter",
                 @"\hSKP Project Website", @"\hUsers", @"\tMM", @"\tKA", @"\hProjekter", @"\hSKP Project Website", @"\hUsers",
                 @"\tMM", @"\tKA", @"\hProjekter", @"\hSKP Project Website", @"\hUsers", @"\tMM", @"\tKA" });
             Console.WriteLine("Pdf file written!");
@@ -64,8 +66,20 @@ namespace LibTest
             Console.WriteLine(decrypteddata);
             Console.WriteLine("File read!");
 
-
+            // sets the database connection
+            Console.WriteLine("\nTesting connection to database");
             SkpDbLib.Managers.Db db = new SkpDbLib.Managers.Db();
+            db.SetConnection(@"Server=172.17.0.57;Database=SkpOpgWeb;User Id=SA;Password=4Ndet0wn");
+            Console.WriteLine("Connection aquired!");
+
+            // gets some data from the database
+            Console.WriteLine("\nGetting some data");
+            DataSet x = db.GetData("Select * From TestTable");
+            DataRow r = x.Tables[0].Rows[0];
+            Console.WriteLine(r[0].ToString() + r[1].ToString());
+            Console.WriteLine("Got data from database!");
+
+
             sec.Dispose();
             files.Dispose();
             db.Dispose();
